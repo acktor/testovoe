@@ -1,6 +1,7 @@
 <?php
 
 use Helpers\Image;
+use Helpers\Model;
 
 spl_autoload_register(function($className) {
     $file = __DIR__ . '\\' . $className . '.php';
@@ -10,24 +11,30 @@ spl_autoload_register(function($className) {
     }
 });
 
-//header('Content-type: text');
+header('Content-type: text');
 
 $image = new Image();
 
-$banner = new \Helpers\Model('banners');
+$banner = new Model('banners');
 
 $attrubutes = ['ip_address' => 123];
 
-$banner->get($attrubutes);
+$banner->where('ip_address', '=', $_SERVER['REMOTE_ADDR']);
+$banner->where('user_agent', '=', $_SERVER['HTTP_USER_AGENT']);
+$banner->where('page_url', '=', $_SERVER['REQUEST_URI']);
 
-//$query = $db->query('SELECT * FROM banners
-//                            where ip_address = ?
-//                            and user_agent = ?
-//                            and ')
-//    ->numRows();
+$banner->first();
 
+if (empty($banner->id)) {
+    $banner->ip_address = $_SERVER['REMOTE_ADDR'];
+    $banner->user_agent = $_SERVER['HTTP_USER_AGENT'];
+    $banner->page_url = $_SERVER['REQUEST_URI'];
+    $banner->views_count = 1;
+} else {
+    $banner->views_count = $banner->views_count++;
+}
 
-
-//var_dump($query);die;
+//$banner->views_count = $banner->views_count++;
+$banner->save();
 
 //imagejpeg(imagecreatefromjpeg($image->getUrl()));
