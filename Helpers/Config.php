@@ -6,8 +6,9 @@ namespace Helpers;
 
 class Config
 {
-    protected const DB_LOGIN = 'root';
-    protected const DB_PASSWORD = '';
-    protected const DB_HOST = 'localhost';
-    protected const DB_PORT = '';
+    const DB_LOGIN = 'root';
+    const DB_PASSWORD = 'Haldir23';
+    const DB_HOST = 'localhost';
+    const DB_PORT = '';
+    const DB_NAME = 'testovoe';
 }

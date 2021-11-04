@@ -10,8 +10,24 @@ spl_autoload_register(function($className) {
     }
 });
 
-header('Content-type: image/jpeg');
+//header('Content-type: text');
 
 $image = new Image();
 
-imagejpeg(imagecreatefromjpeg($image->getUrl()));
+$banner = new \Helpers\Model('banners');
+
+$attrubutes = ['ip_address' => 123];
+
+$banner->get($attrubutes);
+
+//$query = $db->query('SELECT * FROM banners
+//                            where ip_address = ?
+//                            and user_agent = ?
+//                            and ')
+//    ->numRows();
+
+
+
+//var_dump($query);die;
+
+//imagejpeg(imagecreatefromjpeg($image->getUrl()));
